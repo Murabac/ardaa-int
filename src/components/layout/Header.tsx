@@ -89,7 +89,7 @@ export function Header() {
               <button onClick={() => scrollToSection('services')} className={styles.mobileMenuLink}>Services</button>
               <button onClick={() => scrollToSection('portfolio')} className={styles.mobileMenuLink}>Portfolio</button>
               <button onClick={() => scrollToSection('about')} className={styles.mobileMenuLink}>About</button>
-              <button onClick={() => scrollToSection('contact')} className={styles.mobileMenuButton}>
+              <button onClick={() => scrollToSection('contact')} className={styles.mobileMenuCtaButton}>
                 Get in Touch
               </button>
             </div>
