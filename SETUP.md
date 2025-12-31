@@ -130,3 +130,4 @@ If queries fail with "relation does not exist":
 - Add team member profiles
 - Set up image storage in Supabase Storage (if needed)
 
+

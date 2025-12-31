@@ -8,38 +8,56 @@ const projects = [
   {
     category: 'Residential',
     title: 'Modern Living Room',
-    image: 'https://images.unsplash.com/photo-1705321963943-de94bb3f0dd3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBpbnRlcmlvciUyMGRlc2lnbiUyMGxpdmluZyUyMHJvb218ZW58MXx8fHwxNzY2OTkwOTU1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: '/images/feature-1.jpg',
     description: 'Contemporary design with warm aesthetics'
   },
   {
     category: 'Office',
     title: 'Executive Office Suite',
-    image: 'https://images.unsplash.com/photo-1641998148499-cb6b55a3c0d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBvZmZpY2UlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjcwMDk4ODN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: '/images/feature-2.jpg',
     description: 'Luxury workspace for productivity'
   },
   {
     category: 'Mosque',
     title: 'Prayer Hall Interior',
-    image: 'https://images.unsplash.com/photo-1696332598213-a1f16c5e54e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3NxdWUlMjBpbnRlcmlvciUyMGRlc2lnbnxlbnwxfHx8fDE3NjcwODE3Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: '/images/feature-3.jpg',
     description: 'Sacred space with elegant details'
   },
   {
     category: 'Residential',
     title: 'Elegant Home Interior',
-    image: 'https://images.unsplash.com/photo-1600210492493-0946911123ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBob21lJTIwaW50ZXJpb3J8ZW58MXx8fHwxNzY2OTc1OTMzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: '/images/feature-4.jpg',
     description: 'Minimalist sophistication'
   },
   {
     category: 'Government',
     title: 'Government Hall',
-    image: 'https://images.unsplash.com/photo-1764136105889-c900461a874c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnb3Zlcm5tZW50JTIwYnVpbGRpbmclMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjcwODE3Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: '/images/feature-5.jpg',
     description: 'Professional and dignified spaces'
   },
   {
     category: 'Residential',
     title: 'Contemporary Bedroom',
-    image: 'https://images.unsplash.com/photo-1704428382583-c9c7c1e55d94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBiZWRyb29tJTIwZGVzaWdufGVufDF8fHx8MTc2NzAzMTkzNXww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: '/images/feature-6.jpg',
     description: 'Serene and stylish retreat'
+  },
+  {
+    category: 'Office',
+    title: 'Modern Office Design',
+    image: '/images/feature-7.jpg',
+    description: 'Innovative workspace solutions'
+  },
+  {
+    category: 'Mosque',
+    title: 'Modern Masjid Design',
+    image: '/images/feature-8.jpg',
+    description: 'Beautiful sacred spaces'
+  },
+  {
+    category: 'Government',
+    title: 'Government Office Design',
+    image: '/images/feature-9.jpg',
+    description: 'Professional institutional spaces'
   }
 ]
 

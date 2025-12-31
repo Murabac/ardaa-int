@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { LoadingProvider } from "@/contexts/LoadingContext";
+import { LoadingScreen } from "@/components/common/LoadingScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +17,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
+      <body className={`${inter.className} overflow-x-hidden`} suppressHydrationWarning>
+        <LoadingProvider>
+          <LoadingScreen />
+          {children}
+        </LoadingProvider>
+      </body>
     </html>
   );
 }
+
 
