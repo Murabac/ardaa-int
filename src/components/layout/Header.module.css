@@ -157,7 +157,7 @@
 }
 
 .menuLink {
-  color: #1F3A5F;
+  color: #1d2856;
   font-weight: 500;
   transition: color 0.2s;
   position: relative;
@@ -213,7 +213,7 @@
   top: 4rem;
   left: 0;
   right: 0;
-  background: #1F3A5F;
+  background: #1d2856;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 

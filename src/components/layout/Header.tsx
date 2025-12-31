@@ -61,7 +61,7 @@ export function Header() {
               <div className={styles.menuShine} />
             </div>
             
-            <button onClick={() => scrollToSection('services')} className={styles.menuLink}>Services</button>
+            <button onClick={() => scrollToSection('services')} className={styles.menuLink} style={{ marginLeft: '15px' }}>Services</button>
             <button onClick={() => scrollToSection('portfolio')} className={styles.menuLink}>Portfolio</button>
             <button onClick={() => scrollToSection('about')} className={styles.menuLink}>About</button>
             <button onClick={() => scrollToSection('contact')} className={styles.menuButton}>
