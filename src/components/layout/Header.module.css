@@ -11,8 +11,20 @@
 .container {
   max-width: 100%;
   margin: 0;
-  padding: 0 1.5rem;
-  height: 6rem;
+  padding: 0 1rem;
+  height: 4rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    height: 6rem;
+  }
 }
 
 .content {
@@ -27,6 +39,13 @@
 .logoContainer {
   position: relative;
   padding: 0.5rem 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 640px) {
+  .logoContainer {
+    margin-top: 0;
+  }
 }
 
 .logoBackground {
@@ -191,11 +210,17 @@
 .mobileMenu {
   display: block;
   position: absolute;
-  top: 5rem;
+  top: 4rem;
   left: 0;
   right: 0;
   background: #1F3A5F;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 1024px) {
+  .mobileMenu {
+    top: 6rem;
+  }
 }
 
 @media (min-width: 768px) {

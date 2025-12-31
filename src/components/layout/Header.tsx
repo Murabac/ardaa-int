@@ -22,7 +22,7 @@ export function Header() {
           {/* Logo */}
           <motion.div
             className={styles.logoContainer}
-            style={{ height: '4rem' }}
+            style={{ height: 'clamp(3rem, 4rem, 6rem)' }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}

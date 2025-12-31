@@ -7,13 +7,15 @@ interface ImageWithFallbackProps {
   alt: string
   className?: string
   fallbackSrc?: string
+  style?: React.CSSProperties
 }
 
 export function ImageWithFallback({ 
   src, 
   alt, 
   className = '',
-  fallbackSrc = '/images/placeholder.jpg'
+  fallbackSrc = '/images/placeholder.jpg',
+  style
 }: ImageWithFallbackProps) {
   const [imgSrc, setImgSrc] = useState(src)
   const [hasError, setHasError] = useState(false)
@@ -30,6 +32,7 @@ export function ImageWithFallback({
       src={imgSrc}
       alt={alt}
       className={className}
+      style={style}
       onError={handleError}
     />
   )
