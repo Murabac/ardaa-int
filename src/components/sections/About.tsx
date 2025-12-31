@@ -44,7 +44,7 @@ export function About() {
             </h2>
             <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
               <p>
-                Ardaa Interior Firm is a leading design studio specializing in creating exceptional interior spaces that inspire and delight. With over 15 years of experience, we've transformed hundreds of spaces across residential, commercial, government, and religious sectors.
+                Ardaa Interior Firm is a leading design studio specializing in creating exceptional interior spaces that inspire and delight. With over 15 years of experience, we&apos;ve transformed hundreds of spaces across residential, commercial, government, and religious sectors.
               </p>
               <p>
                 Our team of talented designers and architects work tirelessly to understand your unique needs and deliver solutions that exceed expectations. We believe that great design is a perfect blend of aesthetics, functionality, and emotional connection.

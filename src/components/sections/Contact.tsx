@@ -44,10 +44,10 @@ export function Contact() {
         >
           <span className="text-[#E87842] tracking-wider uppercase mb-2 block">Get in Touch</span>
           <h2 className="text-4xl md:text-6xl text-white mb-4">
-            Let's Create Something Amazing Together
+            Let&apos;s Create Something Amazing Together
           </h2>
           <p className="text-xl text-white/80 max-w-3xl mx-auto">
-            Ready to transform your space? Reach out to us and let's start your design journey
+            Ready to transform your space? Reach out to us and let&apos;s start your design journey
           </p>
         </motion.div>
 
