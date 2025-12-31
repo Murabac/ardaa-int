@@ -12,14 +12,14 @@ export function Hero() {
   }
 
   return (
-    <div className="relative min-h-screen lg:h-screen bg-white overflow-hidden">
+    <div className="relative min-h-screen lg:h-screen bg-white overflow-hidden pb-0">
       {/* Header */}
       <Header />
 
       {/* Hero Content - Two Column Layout */}
       <div className="grid lg:grid-cols-2 min-h-[calc(100vh-4rem)] lg:min-h-screen">
         {/* Left Column - Content */}
-        <div className="relative bg-gradient-to-br from-[#1F3A5F] via-[#2A4A6F] to-[#1F3A5F] flex items-center min-h-[50vh] lg:min-h-screen w-full overflow-hidden">
+        <div className="relative bg-gradient-to-br from-[#1d2856] via-[#1d2856] to-[#1d2856] flex items-center min-h-[50vh] lg:min-h-screen w-full overflow-hidden">
           {/* Decorative Elements */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.div
@@ -117,7 +117,7 @@ export function Hero() {
                 <ArrowRight className="group-hover:translate-x-1 transition-transform w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               <button 
-                className="group px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white rounded-full hover:bg-white hover:text-[#1F3A5F] transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="group px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white rounded-full hover:bg-white hover:text-[#1d2856] transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 <Play className="group-hover:scale-110 transition-transform w-4 h-4 sm:w-5 sm:h-5" />
                 Watch Showreel
@@ -147,7 +147,7 @@ export function Hero() {
             </div>
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl">
               <span className="text-[#E87842] text-xs sm:text-sm mb-1 block">Featured Project</span>
-              <h3 className="text-lg sm:text-xl md:text-2xl text-[#1F3A5F]">Modern Masjid Design</h3>
+              <h3 className="text-lg sm:text-xl md:text-2xl text-[#1d2856]">Modern Masjid Design</h3>
             </div>
           </motion.div>
 
@@ -166,7 +166,7 @@ export function Hero() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1F3A5F]/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1d2856]/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
               <span className="text-white">Goverment Office Design</span>
             </div>
           </motion.div>
@@ -186,7 +186,7 @@ export function Hero() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1F3A5F]/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1d2856]/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
               <span className="text-white">Commercial Space</span>
             </div>
           </motion.div>
@@ -223,10 +223,10 @@ export function Hero() {
                 style={{ objectPosition: 'center top' }}
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1F3A5F] to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1d2856] to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-xl">
               <span className="text-[#E87842] text-xs sm:text-sm mb-1 block">Featured Project</span>
-              <h3 className="text-lg sm:text-xl md:text-2xl text-[#1F3A5F]">Modern Masjid Design</h3>
+              <h3 className="text-lg sm:text-xl md:text-2xl text-[#1d2856]">Modern Masjid Design</h3>
             </div>
           </div>
 
@@ -241,7 +241,7 @@ export function Hero() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1F3A5F]/80 to-transparent flex items-end p-3">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1d2856]/80 to-transparent flex items-end p-3">
                 <span className="text-white text-xs sm:text-sm">Government Office Design</span>
               </div>
             </div>
@@ -255,7 +255,7 @@ export function Hero() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1F3A5F]/80 to-transparent flex items-end p-3">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1d2856]/80 to-transparent flex items-end p-3">
                 <span className="text-white text-xs sm:text-sm">Commercial Space</span>
               </div>
             </div>
