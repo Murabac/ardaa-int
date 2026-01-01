@@ -22,7 +22,7 @@ const TikTokIcon = ({ size = 20 }: { size?: number }) => (
 
 // Icon mapping function
 const getSocialIcon = (platform: string) => {
-  const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+  const iconMap: Record<string, React.ComponentType<any>> = {
     Facebook,
     Instagram,
     Twitter,
