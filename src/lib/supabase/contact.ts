@@ -1,4 +1,5 @@
 import { createClient } from './server'
+import { createAdminClient } from './admin'
 
 export interface BusinessHour {
   day: string
@@ -68,7 +69,7 @@ export async function getContactInfo(): Promise<ContactInfo | null> {
  * Get all contact info (for admin use)
  */
 export async function getAllContactInfo(): Promise<ContactInfo[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -93,7 +94,7 @@ export async function getAllContactInfo(): Promise<ContactInfo[]> {
  * Create new contact info
  */
 export async function createContactInfo(contactData: Partial<ContactInfo>): Promise<ContactInfo | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -122,7 +123,7 @@ export async function updateContactInfo(
   id: string,
   updates: Partial<ContactInfo>
 ): Promise<ContactInfo | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -149,7 +150,7 @@ export async function updateContactInfo(
  * Delete contact info
  */
 export async function deleteContactInfo(id: string): Promise<boolean> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { error } = await supabase
     .schema('aradaa_int')
@@ -164,4 +165,5 @@ export async function deleteContactInfo(id: string): Promise<boolean> {
 
   return true
 }
+
 

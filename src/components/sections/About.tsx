@@ -91,11 +91,11 @@ export function About() {
               ))}
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-4">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
               {aboutData.stats.map((stat, index) => (
                 <motion.div
                   key={`${stat.label}-${index}`}
-                  className="group relative bg-gradient-to-br from-[#1d2856]/5 to-[#1d2856]/10 rounded-xl p-4 border border-[#1d2856]/10 hover:border-[#E87842]/30 transition-all duration-300 hover:shadow-lg"
+                  className="group relative bg-gradient-to-br from-[#1d2856]/5 to-[#1d2856]/10 rounded-xl p-4 sm:p-4 border border-[#1d2856]/10 hover:border-[#E87842]/30 transition-all duration-300 hover:shadow-lg"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -103,15 +103,15 @@ export function About() {
                   whileHover={{ scale: 1.05, y: -5 }}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{stat.icon}</span>
+                    <span className="text-2xl sm:text-2xl">{stat.icon}</span>
                     <motion.div
-                      className="text-3xl font-bold bg-gradient-to-r from-[#E87842] to-[#d66a35] bg-clip-text text-transparent"
+                      className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#E87842] to-[#d66a35] bg-clip-text text-transparent"
                       whileHover={{ scale: 1.1 }}
                     >
                       {stat.number}
                     </motion.div>
                   </div>
-                  <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
+                  <div className="text-xs sm:text-sm text-gray-600 font-medium">{stat.label}</div>
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#E87842] to-transparent rounded-b-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </motion.div>
               ))}

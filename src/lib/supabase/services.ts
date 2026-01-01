@@ -1,4 +1,5 @@
 import { createClient } from './server'
+import { createAdminClient } from './admin'
 
 export interface Service {
   id: string
@@ -38,7 +39,7 @@ export async function getServices(): Promise<Service[]> {
  * Get all services (including inactive) - for admin use
  */
 export async function getAllServices(): Promise<Service[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -79,7 +80,7 @@ export async function getServiceById(id: string): Promise<Service | null> {
  * Create a new service
  */
 export async function createService(serviceData: Partial<Service>): Promise<Service | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -103,7 +104,7 @@ export async function updateService(
   id: string,
   updates: Partial<Service>
 ): Promise<Service | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -125,7 +126,7 @@ export async function updateService(
  * Delete a service
  */
 export async function deleteService(id: string): Promise<boolean> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { error } = await supabase
     .schema('aradaa_int')
@@ -140,4 +141,5 @@ export async function deleteService(id: string): Promise<boolean> {
 
   return true
 }
+
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Home, Building2, Landmark, Heart, LucideIcon } from 'lucide-react'
+import { Home, Building2, Landmark, Heart, Church, LucideIcon } from 'lucide-react'
 import { CoreValues } from './CoreValues'
 import { useState, useEffect } from 'react'
 import type { Service } from '@/lib/supabase/services'
@@ -12,9 +12,28 @@ const getIcon = (iconName: string): LucideIcon => {
     Home,
     Building2,
     Landmark,
-    Heart
+    Heart,
+    Church,
   }
-  return iconMap[iconName] || Home // Default to Home if icon not found
+  // Handle case-insensitive matching
+  const normalizedName = iconName?.trim() || ''
+  
+  // Check exact match first (case-sensitive)
+  if (iconMap[normalizedName]) {
+    return iconMap[normalizedName]
+  }
+  
+  // Then check case-insensitive
+  const lowerName = normalizedName.toLowerCase()
+  const lowerMap: Record<string, LucideIcon> = {
+    'home': Home,
+    'building2': Building2,
+    'landmark': Landmark,
+    'heart': Heart,
+    'church': Church,
+  }
+  
+  return lowerMap[lowerName] || Home // Default to Home if icon not found
 }
 
 export function Services() {
@@ -92,6 +111,10 @@ export function Services() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => {
               const IconComponent = getIcon(service.icon)
+              // Debug: Log icon name if it's not found
+              if (!IconComponent || IconComponent === Home && service.icon !== 'Home' && service.icon !== 'home') {
+                console.log('Icon not found for service:', service.title, 'icon name:', service.icon)
+              }
               return (
                 <motion.div
                   key={service.id}
@@ -107,8 +130,16 @@ export function Services() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                   
                   <div className="relative z-10">
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <IconComponent className="text-white" size={32} />
+                    <div className={`w-16 h-16 rounded-2xl ${
+                      service.icon === 'Heart' || service.icon === 'heart' 
+                        ? 'bg-gradient-to-br from-emerald-500 to-teal-500' 
+                        : `bg-gradient-to-br ${service.color}`
+                    } flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <IconComponent 
+                        className="text-white" 
+                        size={32} 
+                        fill={service.icon === 'Heart' || service.icon === 'heart' ? 'currentColor' : 'none'}
+                      />
                     </div>
                     
                     <h3 className="text-2xl text-[#1d2856] mb-3">
