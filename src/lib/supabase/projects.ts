@@ -1,4 +1,5 @@
 import { createClient } from './server'
+import { createAdminClient } from './admin'
 
 export interface Project {
   id: string
@@ -83,7 +84,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
  * Get all projects (including inactive) - for admin use
  */
 export async function getAllProjects(): Promise<Project[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -124,7 +125,7 @@ export async function getProjectById(id: string): Promise<Project | null> {
  * Create a new project
  */
 export async function createProject(projectData: Partial<Project>): Promise<Project | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -148,7 +149,7 @@ export async function updateProject(
   id: string,
   updates: Partial<Project>
 ): Promise<Project | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -170,7 +171,7 @@ export async function updateProject(
  * Delete a project
  */
 export async function deleteProject(id: string): Promise<boolean> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { error } = await supabase
     .schema('aradaa_int')
@@ -185,4 +186,5 @@ export async function deleteProject(id: string): Promise<boolean> {
 
   return true
 }
+
 

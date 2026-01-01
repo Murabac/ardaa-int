@@ -1,16 +1,18 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Play, Award, CheckCircle2 } from 'lucide-react'
+import { Award, CheckCircle2 } from 'lucide-react'
 import { ImageWithFallback } from '../figma/ImageWithFallback'
 import { Header } from '../layout/Header'
 import { useState, useEffect } from 'react'
 import type { HeroSection } from '@/lib/supabase/hero'
 import { useLoading } from '@/contexts/LoadingContext'
+import { ShowreelCarousel } from '../common/ShowreelCarousel'
 
 export function Hero() {
   const [heroData, setHeroData] = useState<HeroSection | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [showShowreel, setShowShowreel] = useState(false)
   const { registerLoader, unregisterLoader } = useLoading()
 
   useEffect(() => {
@@ -45,38 +47,23 @@ export function Hero() {
     }
   }, [registerLoader, unregisterLoader]) // Include dependencies
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    element?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const handleButtonAction = (action: string | null) => {
-    if (!action) return
-    if (action.startsWith('scroll:')) {
-      const sectionId = action.replace('scroll:', '')
-      scrollToSection(sectionId)
-    }
-  }
 
   // Get featured projects from individual columns
   const featuredProject1 = (heroData?.featured_project_1_title || heroData?.featured_project_1_image_url) ? {
     title: heroData.featured_project_1_title || 'Featured Project',
     image_url: heroData.featured_project_1_image_url || heroData.featured_image_url || '/images/feature-1.jpg',
-    image_alt: heroData.featured_project_1_image_alt || heroData.featured_image_alt || 'Featured Project',
     category: heroData.featured_project_1_category || ''
   } : null
 
   const featuredProject2 = (heroData?.featured_project_2_title || heroData?.featured_project_2_image_url) ? {
     title: heroData.featured_project_2_title || 'Project 2',
     image_url: heroData.featured_project_2_image_url || '/images/feature-5.jpg',
-    image_alt: heroData.featured_project_2_image_alt || 'Project 2',
     category: heroData.featured_project_2_category || ''
   } : null
 
   const featuredProject3 = (heroData?.featured_project_3_title || heroData?.featured_project_3_image_url) ? {
     title: heroData.featured_project_3_title || 'Project 3',
     image_url: heroData.featured_project_3_image_url || '/images/feature-2.jpg',
-    image_alt: heroData.featured_project_3_image_alt || 'Project 3',
     category: heroData.featured_project_3_category || ''
   } : null
 
@@ -164,9 +151,6 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               {heroData.title_line1}
-              <span className="block mt-1 sm:mt-2" style={{ color: heroData.title_line2_color }}>
-                {heroData.title_line2}
-              </span>
             </motion.h1>
 
             <motion.p
@@ -199,6 +183,7 @@ export function Hero() {
               ))}
             </motion.div>
 
+            {/* Buttons - Static Content */}
             <motion.div
               className="flex flex-col sm:flex-row gap-3 sm:gap-4"
               initial={{ opacity: 0, y: 30 }}
@@ -206,22 +191,30 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 1 }}
             >
               <button 
-                onClick={() => handleButtonAction(heroData.primary_button_action)}
+                onClick={() => {
+                  const element = document.getElementById('portfolio')
+                  element?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 className="group px-6 sm:px-8 py-3 sm:py-4 bg-[#E87842] text-white rounded-full hover:bg-[#d66a35] transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                {heroData.primary_button_text}
-                <ArrowRight className="group-hover:translate-x-1 transition-transform w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
-              {heroData.secondary_button_text && (
-                <button 
-                  onClick={() => handleButtonAction(heroData.secondary_button_action || null)}
-                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white rounded-full hover:bg-white hover:text-[#1d2856] transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+                View Our Work
+                <motion.span
+                  className="inline-block"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <Play className="group-hover:scale-110 transition-transform w-4 h-4 sm:w-5 sm:h-5" />
-                  {heroData.secondary_button_text}
-                </button>
-              )}
+                  →
+                </motion.span>
+              </button>
+              <button 
+                onClick={() => setShowShowreel(true)}
+                className="group px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white rounded-full hover:bg-white hover:text-[#1d2856] transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+              >
+                <span className="text-lg">▶</span>
+                Watch Showreel
+              </button>
             </motion.div>
+
           </div>
         </div>
 
@@ -238,7 +231,7 @@ export function Hero() {
               <div className="absolute top-0 left-0 w-full" style={{ height: 'calc(((100vh - 2rem - 1rem - 60px - 1rem) / 3 * 2) * 2)' }}>
                 <ImageWithFallback
                   src={featuredProject1?.image_url || heroData.featured_image_url || '/images/feature-1.jpg'}
-                  alt={featuredProject1?.image_alt || heroData.featured_image_alt || 'Featured Project'}
+                  alt={featuredProject1?.title || heroData.featured_project_title || 'Featured Project'}
                   className="w-full h-full object-cover"
                   style={{ objectPosition: 'center top' }}
                 />
@@ -261,7 +254,7 @@ export function Hero() {
             <div className="relative w-full h-full">
               <ImageWithFallback
                 src={featuredProject2?.image_url || '/images/feature-5.jpg'}
-                alt={featuredProject2?.image_alt || 'Interior Design Showcase'}
+                alt={featuredProject2?.title || 'Interior Design Showcase'}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -281,7 +274,7 @@ export function Hero() {
             <div className="relative w-full h-full">
               <ImageWithFallback
                 src={featuredProject3?.image_url || '/images/feature-2.jpg'}
-                alt={featuredProject3?.image_alt || 'Modern Architecture Interior'}
+                alt={featuredProject3?.title || 'Modern Architecture Interior'}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -290,7 +283,7 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Bottom Text Card */}
+          {/* Ready to Start Section - Static Content */}
           <motion.div
             className="col-span-2 bg-gradient-to-r from-[#E87842] to-[#d66a35] rounded-2xl shadow-lg flex items-center justify-between"
             style={{ height: '60px', padding: '0 1.5rem' }}
@@ -299,15 +292,19 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.7 }}
           >
             <div className="text-white">
-              <div className="text-lg font-semibold">{heroData.ready_to_start_text}</div>
+              <div className="text-lg font-semibold">Ready to Start?</div>
             </div>
             <button 
-              onClick={() => handleButtonAction(heroData.ready_to_start_action)}
+              onClick={() => {
+                const element = document.getElementById('contact')
+                element?.scrollIntoView({ behavior: 'smooth' })
+              }}
               className="px-4 py-1.5 bg-white text-[#E87842] rounded-full hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl flex-shrink-0 text-sm font-medium"
             >
-              {heroData.ready_to_start_button_text}
+              Contact Us
             </button>
           </motion.div>
+
         </div>
 
         {/* Mobile Image Section */}
@@ -317,7 +314,7 @@ export function Hero() {
             <div className="relative w-full h-full">
               <ImageWithFallback
                 src={featuredProject1?.image_url || heroData.featured_image_url || '/images/feature-1.jpg'}
-                alt={featuredProject1?.image_alt || heroData.featured_image_alt || 'Featured Project'}
+                alt={featuredProject1?.title || heroData.featured_project_title || 'Featured Project'}
                 className="w-full h-full object-cover"
                 style={{ objectPosition: 'center top' }}
               />
@@ -336,7 +333,7 @@ export function Hero() {
               <div className="relative w-full h-full">
                 <ImageWithFallback
                   src={featuredProject2?.image_url || '/images/feature-5.jpg'}
-                  alt={featuredProject2?.image_alt || 'Interior Design Showcase'}
+                  alt={featuredProject2?.title || 'Interior Design Showcase'}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -350,7 +347,7 @@ export function Hero() {
               <div className="relative w-full h-full">
                 <ImageWithFallback
                   src={featuredProject3?.image_url || '/images/feature-2.jpg'}
-                  alt={featuredProject3?.image_alt || 'Modern Architecture Interior'}
+                  alt={featuredProject3?.title || 'Modern Architecture Interior'}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -360,7 +357,7 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Ready to Start Card - Mobile */}
+          {/* Ready to Start Card - Mobile - Static Content */}
           <motion.div
             className="bg-gradient-to-r from-[#E87842] to-[#d66a35] rounded-xl shadow-lg flex items-center justify-between p-4"
             initial={{ opacity: 0, y: 20 }}
@@ -368,17 +365,24 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.7 }}
           >
             <div className="text-white">
-              <div className="text-base sm:text-lg font-semibold">{heroData.ready_to_start_text}</div>
+              <div className="text-base sm:text-lg font-semibold">Ready to Start?</div>
             </div>
             <button 
-              onClick={() => handleButtonAction(heroData.ready_to_start_action)}
+              onClick={() => {
+                const element = document.getElementById('contact')
+                element?.scrollIntoView({ behavior: 'smooth' })
+              }}
               className="px-4 py-2 bg-white text-[#E87842] rounded-full hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl flex-shrink-0 text-sm font-medium"
             >
-              {heroData.ready_to_start_button_text}
+              Contact Us
             </button>
           </motion.div>
+
         </div>
       </div>
+
+      {/* Showreel Carousel Modal */}
+      <ShowreelCarousel isOpen={showShowreel} onClose={() => setShowShowreel(false)} />
 
     </div>
   )

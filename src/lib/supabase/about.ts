@@ -1,4 +1,5 @@
 import { createClient } from './server'
+import { createAdminClient } from './admin'
 
 export interface Stat {
   number: string
@@ -65,7 +66,7 @@ export async function getAboutSection(): Promise<AboutSection | null> {
  * Get all about sections (for admin use)
  */
 export async function getAllAboutSections(): Promise<AboutSection[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -92,7 +93,7 @@ export async function getAllAboutSections(): Promise<AboutSection[]> {
  * Create a new about section
  */
 export async function createAboutSection(aboutData: Partial<AboutSection>): Promise<AboutSection | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -123,7 +124,7 @@ export async function updateAboutSection(
   id: string,
   updates: Partial<AboutSection>
 ): Promise<AboutSection | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -152,7 +153,7 @@ export async function updateAboutSection(
  * Delete an about section
  */
 export async function deleteAboutSection(id: string): Promise<boolean> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { error } = await supabase
     .schema('aradaa_int')
@@ -167,4 +168,5 @@ export async function deleteAboutSection(id: string): Promise<boolean> {
 
   return true
 }
+
 

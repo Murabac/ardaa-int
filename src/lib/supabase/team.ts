@@ -1,4 +1,5 @@
 import { createClient } from './server'
+import { createAdminClient } from './admin'
 
 export interface TeamMember {
   name: string
@@ -55,7 +56,7 @@ export async function getTeamSection(): Promise<TeamSection | null> {
  * Get all team sections (for admin use)
  */
 export async function getAllTeamSections(): Promise<TeamSection[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -78,7 +79,7 @@ export async function getAllTeamSections(): Promise<TeamSection[]> {
  * Create a new team section
  */
 export async function createTeamSection(teamData: Partial<TeamSection>): Promise<TeamSection | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -105,7 +106,7 @@ export async function updateTeamSection(
   id: string,
   updates: Partial<TeamSection>
 ): Promise<TeamSection | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .schema('aradaa_int')
@@ -130,7 +131,7 @@ export async function updateTeamSection(
  * Delete a team section
  */
 export async function deleteTeamSection(id: string): Promise<boolean> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { error } = await supabase
     .schema('aradaa_int')
@@ -145,4 +146,5 @@ export async function deleteTeamSection(id: string): Promise<boolean> {
 
   return true
 }
+
 
