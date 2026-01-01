@@ -1,41 +1,45 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Home, Building2, Landmark, Heart } from 'lucide-react'
+import { Home, Building2, Landmark, Heart, LucideIcon } from 'lucide-react'
 import { CoreValues } from './CoreValues'
+import { useState, useEffect } from 'react'
+import type { Service } from '@/lib/supabase/services'
 
-const services = [
-  {
-    icon: Home,
-    title: 'Residential Homes',
-    description: 'Create your dream home with custom interior designs that reflect your personality and lifestyle.',
-    color: 'from-orange-500 to-red-500',
-    category: 'Residential'
-  },
-  {
-    icon: Building2,
-    title: 'Business Offices',
-    description: 'Boost productivity with modern, functional office spaces designed for success and collaboration.',
-    color: 'from-blue-500 to-indigo-500',
-    category: 'Office'
-  },
-  {
-    icon: Landmark,
-    title: 'Government Buildings',
-    description: 'Professional and dignified interiors that serve the public with style and functionality.',
-    color: 'from-purple-500 to-pink-500',
-    category: 'Government'
-  },
-  {
-    icon: Heart,
-    title: 'Mosques',
-    description: 'Sacred spaces designed with reverence, combining traditional aesthetics with modern comfort.',
-    color: 'from-emerald-500 to-teal-500',
-    category: 'Mosque'
+// Icon mapping function
+const getIcon = (iconName: string): LucideIcon => {
+  const iconMap: Record<string, LucideIcon> = {
+    Home,
+    Building2,
+    Landmark,
+    Heart
   }
-]
+  return iconMap[iconName] || Home // Default to Home if icon not found
+}
 
 export function Services() {
+  const [services, setServices] = useState<Service[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('/api/services')
+        const result = await response.json()
+        if (result.success && result.data) {
+          setServices(result.data)
+        } else {
+          console.warn('Services data not available:', result.error || 'Unknown error')
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchServices()
+  }, [])
+
   const handleServiceClick = (category: string) => {
     // Scroll to portfolio section
     const portfolioSection = document.getElementById('portfolio')
@@ -70,39 +74,58 @@ export function Services() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              onClick={() => handleServiceClick(service.category)}
-            >
-              {/* Gradient background on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-              
-              <div className="relative z-10">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <service.icon className="text-white" size={32} />
-                </div>
-                
-                <h3 className="text-2xl text-[#1d2856] mb-3">
-                  {service.title}
-                </h3>
-                
-                <p className="text-gray-600 leading-relaxed">
-                  {service.description}
-                </p>
-
-                <div className={`mt-6 w-12 h-1 bg-gradient-to-r ${service.color} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
+        {isLoading ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 animate-pulse"
+              >
+                <div className="w-16 h-16 bg-gray-200 rounded-2xl mb-6" />
+                <div className="h-6 bg-gray-200 rounded mb-3" />
+                <div className="h-4 bg-gray-200 rounded mb-2" />
+                <div className="h-4 bg-gray-200 rounded w-3/4" />
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => {
+              const IconComponent = getIcon(service.icon)
+              return (
+                <motion.div
+                  key={service.id}
+                  className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden cursor-pointer"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -8 }}
+                  onClick={() => handleServiceClick(service.category)}
+                >
+                  {/* Gradient background on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                  
+                  <div className="relative z-10">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <IconComponent className="text-white" size={32} />
+                    </div>
+                    
+                    <h3 className="text-2xl text-[#1d2856] mb-3">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-gray-600 leading-relaxed">
+                      {service.description}
+                    </p>
+
+                    <div className={`mt-6 w-12 h-1 bg-gradient-to-r ${service.color} rounded-full transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        )}
 
         <CoreValues />
       </div>

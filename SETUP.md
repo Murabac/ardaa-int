@@ -131,3 +131,4 @@ If queries fail with "relation does not exist":
 - Set up image storage in Supabase Storage (if needed)
 
 
+

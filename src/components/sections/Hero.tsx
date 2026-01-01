@@ -43,7 +43,7 @@ export function Hero() {
     return () => {
       unregisterLoader(loaderId)
     }
-  }, []) // Empty dependency array - only run once on mount
+  }, [registerLoader, unregisterLoader]) // Include dependencies
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)

@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion'
 import { Facebook, Instagram, Twitter } from 'lucide-react'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 import styles from './Header.module.css'
+import type { ContactInfo } from '@/lib/supabase/contact'
 
 // TikTok Icon Component
 const TikTokIcon = ({ size = 20 }: { size?: number }) => (
@@ -18,7 +20,40 @@ const TikTokIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 )
 
+// Icon mapping function
+const getSocialIcon = (platform: string) => {
+  const iconMap: Record<string, React.ComponentType<any>> = {
+    Facebook,
+    Instagram,
+    Twitter,
+    TikTok: TikTokIcon
+  }
+  return iconMap[platform] || null
+}
+
 export function Footer() {
+  const [contactData, setContactData] = useState<ContactInfo | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchContactData = async () => {
+      try {
+        const response = await fetch('/api/contact-info')
+        const result = await response.json()
+        if (result.success && result.data) {
+          setContactData(result.data)
+        } else {
+          console.warn('Contact data not available:', result.error || 'Unknown error')
+        }
+      } catch (error) {
+        console.error('Error fetching contact data:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchContactData()
+  }, [])
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     element?.scrollIntoView({ behavior: 'smooth' })
@@ -58,9 +93,11 @@ export function Footer() {
                 </div>
               </motion.div>
             </div>
-            <p className="text-white/70 leading-relaxed mt-4">
-              Transforming spaces into masterpieces since 2010. Excellence in every design, passion in every project.
-            </p>
+            {contactData?.footer_text && (
+              <p className="text-white/70 leading-relaxed mt-4">
+                {contactData.footer_text}
+              </p>
+            )}
           </div>
 
           {/* Quick Links */}
@@ -114,42 +151,30 @@ export function Footer() {
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-white/60">
-              © 2024 Ardaa Interior Firm. All rights reserved.
+              {contactData?.copyright_text || '© 2024 Ardaa Interior Firm. All rights reserved.'}
             </div>
-            <div className="flex gap-4">
-              <motion.a
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#E87842] transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Facebook size={20} />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#E87842] transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Instagram size={20} />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#E87842] transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Twitter size={20} />
-              </motion.a>
-              <motion.a
-                href="#"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#E87842] transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <TikTokIcon size={20} />
-              </motion.a>
-            </div>
+            {contactData && contactData.social_media_links.length > 0 && (
+              <div className="flex gap-4">
+                {contactData.social_media_links.map((social, index) => {
+                  const IconComponent = getSocialIcon(social.platform)
+                  if (!IconComponent) return null
+                  
+                  return (
+                    <motion.a
+                      key={`${social.platform}-${index}`}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#E87842] transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <IconComponent size={20} />
+                    </motion.a>
+                  )
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>
