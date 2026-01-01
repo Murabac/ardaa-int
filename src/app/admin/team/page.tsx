@@ -357,7 +357,9 @@ export default function TeamAdminPage() {
                           <div className="space-y-2">
                             <div className="flex gap-2">
                               <input
-                                ref={(el) => (fileInputRefs.current[index] = el)}
+                                ref={(el) => {
+                                  fileInputRefs.current[index] = el
+                                }}
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => handleFileChange(e, index)}
@@ -406,7 +408,7 @@ export default function TeamAdminPage() {
                     )
                   })}
                   {(!formData.team_members || formData.team_members.length === 0) && (
-                    <p className="text-sm text-gray-500 italic">No team members added yet. Click "Add Member" to add one.</p>
+                    <p className="text-sm text-gray-500 italic">No team members added yet. Click &quot;Add Member&quot; to add one.</p>
                   )}
                 </div>
               </div>
@@ -527,7 +529,7 @@ export default function TeamAdminPage() {
             </table>
             {sortedSections.length === 0 && (
               <div className="text-center py-12 text-gray-500">
-                No team sections found. Click "Add New Section" to get started.
+                No team sections found. Click &quot;Add New Section&quot; to get started.
               </div>
             )}
           </div>

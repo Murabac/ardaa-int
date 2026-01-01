@@ -302,7 +302,7 @@ export default function AboutAdminPage() {
                     </div>
                   ))}
                   {(!formData.description_paragraphs || formData.description_paragraphs.length === 0) && (
-                    <p className="text-sm text-gray-500 italic">No paragraphs added yet. Click "Add Paragraph" to add one.</p>
+                    <p className="text-sm text-gray-500 italic">No paragraphs added yet. Click &quot;Add Paragraph&quot; to add one.</p>
                   )}
                 </div>
               </div>
@@ -358,7 +358,7 @@ export default function AboutAdminPage() {
                     </div>
                   ))}
                   {(!formData.stats || formData.stats.length === 0) && (
-                    <p className="text-sm text-gray-500 italic">No stats added yet. Click "Add Stat" to add one.</p>
+                    <p className="text-sm text-gray-500 italic">No stats added yet. Click &quot;Add Stat&quot; to add one.</p>
                   )}
                 </div>
               </div>
@@ -414,7 +414,7 @@ export default function AboutAdminPage() {
                     </div>
                   ))}
                   {(!formData.values || formData.values.length === 0) && (
-                    <p className="text-sm text-gray-500 italic">No values added yet. Click "Add Value" to add one.</p>
+                    <p className="text-sm text-gray-500 italic">No values added yet. Click &quot;Add Value&quot; to add one.</p>
                   )}
                 </div>
               </div>
@@ -532,7 +532,7 @@ export default function AboutAdminPage() {
             </table>
             {sortedSections.length === 0 && (
               <div className="text-center py-12 text-gray-500">
-                No about sections found. Click "Add New Section" to get started.
+                No about sections found. Click &quot;Add New Section&quot; to get started.
               </div>
             )}
           </div>

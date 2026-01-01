@@ -390,7 +390,7 @@ export default function ContactInfoAdminPage() {
                     </div>
                   ))}
                   {(!formData.address_lines || formData.address_lines.length === 0) && (
-                    <p className="text-sm text-gray-500 italic">No address lines added yet. Click "Add Line" to add one.</p>
+                    <p className="text-sm text-gray-500 italic">No address lines added yet. Click &quot;Add Line&quot; to add one.</p>
                   )}
                 </div>
               </div>
@@ -442,7 +442,7 @@ export default function ContactInfoAdminPage() {
                     </div>
                   ))}
                   {(!formData.business_hours || formData.business_hours.length === 0) && (
-                    <p className="text-sm text-gray-500 italic">No business hours added yet. Click "Add Hours" to add one.</p>
+                    <p className="text-sm text-gray-500 italic">No business hours added yet. Click &quot;Add Hours&quot; to add one.</p>
                   )}
                 </div>
               </div>
@@ -521,7 +521,7 @@ export default function ContactInfoAdminPage() {
                     </div>
                   ))}
                   {(!formData.social_media_links || formData.social_media_links.length === 0) && (
-                    <p className="text-sm text-gray-500 italic">No social media links added yet. Click "Add Link" to add one.</p>
+                    <p className="text-sm text-gray-500 italic">No social media links added yet. Click &quot;Add Link&quot; to add one.</p>
                   )}
                 </div>
               </div>
@@ -641,7 +641,7 @@ export default function ContactInfoAdminPage() {
             </table>
             {sortedInfos.length === 0 && (
               <div className="text-center py-12 text-gray-500">
-                No contact info found. Click "Add New Contact Info" to get started.
+                No contact info found. Click &quot;Add New Contact Info&quot; to get started.
               </div>
             )}
           </div>

@@ -638,7 +638,7 @@ export default function ShowreelAdminPage() {
             </table>
             {sortedItems.length === 0 && (
               <div className="text-center py-12 text-gray-500">
-                No showreel items found. Click "Add New Item" to get started.
+                No showreel items found. Click &quot;Add New Item&quot; to get started.
               </div>
             )}
           </div>

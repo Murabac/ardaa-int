@@ -654,7 +654,7 @@ export default function ProjectsAdminPage() {
             </table>
             {sortedProjects.length === 0 && (
               <div className="text-center py-12 text-gray-500">
-                No projects found. Click "Add New Project" to get started.
+                No projects found. Click &quot;Add New Project&quot; to get started.
               </div>
             )}
           </div>

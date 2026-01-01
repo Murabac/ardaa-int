@@ -584,7 +584,7 @@ export default function ServicesAdminPage() {
             </table>
             {sortedServices.length === 0 && (
               <div className="text-center py-12 text-gray-500">
-                No services found. Click "Add New Service" to get started.
+                No services found. Click &quot;Add New Service&quot; to get started.
               </div>
             )}
           </div>
