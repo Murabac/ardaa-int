@@ -1,15 +1,15 @@
-import { getHeroSection } from '@/lib/supabase/hero'
+import { getTeamSection } from '@/lib/supabase/team'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const heroData = await getHeroSection()
+    const teamData = await getTeamSection()
 
-    if (!heroData) {
+    if (!teamData) {
       return NextResponse.json(
         {
           success: false,
-          error: 'No active hero section found'
+          error: 'No active team section found'
         },
         { status: 404 }
       )
@@ -17,13 +17,13 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      data: heroData
+      data: teamData
     })
   } catch (error: any) {
     return NextResponse.json(
       {
         success: false,
-        error: 'Failed to fetch hero section',
+        error: 'Failed to fetch team section',
         details: {
           message: error?.message || 'Unknown error'
         }
@@ -32,5 +32,4 @@ export async function GET() {
     )
   }
 }
-
 

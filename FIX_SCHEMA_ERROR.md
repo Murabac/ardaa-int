@@ -65,3 +65,4 @@ Supabase uses PostgREST to expose your database via API. By default, only the `p
   - Verify you're connected to the correct project
   - Check the SQL Editor for any error messages
 
+

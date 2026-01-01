@@ -2,9 +2,12 @@
 
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import type { ContactInfo } from '@/lib/supabase/contact'
 
 export function Contact() {
+  const [contactData, setContactData] = useState<ContactInfo | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,6 +15,25 @@ export function Contact() {
     service: '',
     message: ''
   })
+
+  useEffect(() => {
+    const fetchContactData = async () => {
+      try {
+        const response = await fetch('/api/contact-info')
+        const result = await response.json()
+        if (result.success && result.data) {
+          setContactData(result.data)
+        } else {
+          console.warn('Contact data not available:', result.error || 'Unknown error')
+        }
+      } catch (error) {
+        console.error('Error fetching contact data:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchContactData()
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,13 +64,17 @@ export function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-[#E87842] tracking-wider uppercase mb-2 block">Get in Touch</span>
+          <span className="text-[#E87842] tracking-wider uppercase mb-2 block">
+            {contactData?.contact_badge_text || 'Get in Touch'}
+          </span>
           <h2 className="text-4xl md:text-6xl text-white mb-4">
-            Let&apos;s Create Something Amazing Together
+            {contactData?.contact_heading || 'Let\'s Create Something Amazing Together'}
           </h2>
-          <p className="text-xl text-white/80 max-w-3xl mx-auto">
-            Ready to transform your space? Reach out to us and let&apos;s start your design journey
-          </p>
+          {contactData?.contact_description && (
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              {contactData.contact_description}
+            </p>
+          )}
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -62,56 +88,77 @@ export function Contact() {
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 h-full">
               <h3 className="text-3xl text-white mb-8">Contact Information</h3>
               
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone size={20} className="text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white/60 mb-1">Phone</div>
-                    <div className="text-white text-lg">+252 63 47492747</div>
-                    <div className="text-white text-lg">+252 63 4289558</div>
-                  </div>
+              {isLoading ? (
+                <div className="space-y-6 animate-pulse">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-white/20 rounded-xl" />
+                      <div className="flex-1">
+                        <div className="h-4 bg-white/20 rounded w-16 mb-2" />
+                        <div className="h-5 bg-white/20 rounded w-40 mb-1" />
+                        <div className="h-5 bg-white/20 rounded w-40" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              ) : contactData ? (
+                <>
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Phone size={20} className="text-white" />
+                      </div>
+                      <div>
+                        <div className="text-white/60 mb-1">Phone</div>
+                        <div className="text-white text-lg">{contactData.phone_1}</div>
+                        {contactData.phone_2 && (
+                          <div className="text-white text-lg">{contactData.phone_2}</div>
+                        )}
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Mail size={20} className="text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white/60 mb-1">Email</div>
-                    <div className="text-white text-lg">info@ardaainterior.com</div>
-                    <div className="text-white text-lg">contact@ardaainterior.com</div>
-                  </div>
-                </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Mail size={20} className="text-white" />
+                      </div>
+                      <div>
+                        <div className="text-white/60 mb-1">Email</div>
+                        <div className="text-white text-lg">{contactData.email_1}</div>
+                        {contactData.email_2 && (
+                          <div className="text-white text-lg">{contactData.email_2}</div>
+                        )}
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin size={20} className="text-white" />
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <MapPin size={20} className="text-white" />
+                      </div>
+                      <div>
+                        <div className="text-white/60 mb-1">Office</div>
+                        {contactData.address_lines.map((line, index) => (
+                          <div key={index} className="text-white text-lg">{line}</div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-white/60 mb-1">Office</div>
-                    <div className="text-white text-lg">Burj Omaar, 6th floor</div>
-                    <div className="text-white text-lg">26 June District</div>
-                    <div className="text-white text-lg">Hargeisa, Somalia</div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Business Hours */}
-              <div className="mt-10 pt-8 border-t border-white/20">
-                <h4 className="text-xl text-white mb-4">Business Hours</h4>
-                <div className="space-y-2 text-white/80">
-                  <div className="flex justify-between">
-                    <span>Saturday - Thursday</span>
-                    <span>8:00 AM - 5:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Friday</span>
-                    <span>Closed</span>
-                  </div>
-                </div>
-              </div>
+                  {/* Business Hours */}
+                  {contactData.business_hours.length > 0 && (
+                    <div className="mt-10 pt-8 border-t border-white/20">
+                      <h4 className="text-xl text-white mb-4">Business Hours</h4>
+                      <div className="space-y-2 text-white/80">
+                        {contactData.business_hours.map((hour, index) => (
+                          <div key={index} className="flex justify-between">
+                            <span>{hour.day}</span>
+                            <span>{hour.hours}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : null}
             </div>
           </motion.div>
 

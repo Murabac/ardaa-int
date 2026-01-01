@@ -1,32 +1,73 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Award, Users, Target, Sparkles } from 'lucide-react'
+import { Award, Users, Target, Sparkles, LucideIcon } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import type { AboutSection } from '@/lib/supabase/about'
 
-const values = [
-  {
-    icon: Award,
-    title: 'Excellence',
-    description: 'Committed to delivering the highest quality in every project'
-  },
-  {
-    icon: Users,
-    title: 'Collaboration',
-    description: 'Working closely with clients to bring their vision to life'
-  },
-  {
-    icon: Target,
-    title: 'Innovation',
-    description: 'Pushing boundaries with creative and modern design solutions'
-  },
-  {
-    icon: Sparkles,
-    title: 'Attention to Detail',
-    description: 'Every element carefully crafted for perfection'
+// Icon mapping function
+const getIcon = (iconName: string): LucideIcon => {
+  const iconMap: Record<string, LucideIcon> = {
+    Award,
+    Users,
+    Target,
+    Sparkles
   }
-]
+  return iconMap[iconName] || Award // Default to Award if icon not found
+}
 
 export function About() {
+  const [aboutData, setAboutData] = useState<AboutSection | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        const response = await fetch('/api/about')
+        const result = await response.json()
+        if (result.success && result.data) {
+          setAboutData(result.data)
+        } else {
+          console.warn('About data not available:', result.error || 'Unknown error')
+        }
+      } catch (error) {
+        console.error('Error fetching about data:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchAboutData()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <section id="about" className="pt-20 pb-0 md:pt-32 md:pb-0 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-32 mb-4" />
+              <div className="h-12 bg-gray-200 rounded w-3/4 mb-6" />
+              <div className="space-y-4">
+                <div className="h-4 bg-gray-200 rounded" />
+                <div className="h-4 bg-gray-200 rounded" />
+                <div className="h-4 bg-gray-200 rounded w-5/6" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-48 bg-gray-200 rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (!aboutData) {
+    return null
+  }
+
   return (
     <section id="about" className="pt-20 pb-0 md:pt-32 md:pb-0 bg-white">
       <div className="container mx-auto px-6">
@@ -38,30 +79,22 @@ export function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-[#E87842] tracking-wider uppercase mb-2 block">About Ardaa</span>
+            <span className="text-[#E87842] tracking-wider uppercase mb-2 block">
+              {aboutData.badge_text || 'About Ardaa'}
+            </span>
             <h2 className="text-4xl md:text-6xl text-[#1d2856] mb-6">
-              Designing Dreams Since 2010
+              {aboutData.main_heading}
             </h2>
             <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
-              <p>
-                Ardaa Interior Firm is a leading design studio specializing in creating exceptional interior spaces that inspire and delight. With over 15 years of experience, we&apos;ve transformed hundreds of spaces across residential, commercial, government, and religious sectors.
-              </p>
-              <p>
-                Our team of talented designers and architects work tirelessly to understand your unique needs and deliver solutions that exceed expectations. We believe that great design is a perfect blend of aesthetics, functionality, and emotional connection.
-              </p>
-              <p>
-                From intimate home makeovers to large-scale institutional projects, we approach each assignment with the same level of dedication and creativity. Our portfolio speaks to our versatility and commitment to excellence.
-              </p>
+              {aboutData.description_paragraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
 
             <div className="mt-8 grid grid-cols-3 gap-4">
-              {[
-                { number: '15+', label: 'Years of Excellence', icon: '📅' },
-                { number: '30+', label: 'Expert Designers', icon: '👥' },
-                { number: '98%', label: 'Client Satisfaction', icon: '⭐' }
-              ].map((stat, index) => (
+              {aboutData.stats.map((stat, index) => (
                 <motion.div
-                  key={stat.label}
+                  key={`${stat.label}-${index}`}
                   className="group relative bg-gradient-to-br from-[#1d2856]/5 to-[#1d2856]/10 rounded-xl p-4 border border-[#1d2856]/10 hover:border-[#E87842]/30 transition-all duration-300 hover:shadow-lg"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -93,22 +126,25 @@ export function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                className="bg-gradient-to-br from-[#1d2856] to-[#1d2856] p-8 rounded-2xl text-white hover:scale-105 transition-transform duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 * index }}
-              >
-                <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center mb-4">
-                  <value.icon size={24} />
-                </div>
-                <h3 className="text-xl mb-2">{value.title}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{value.description}</p>
-              </motion.div>
-            ))}
+            {aboutData.values.map((value, index) => {
+              const IconComponent = getIcon(value.icon)
+              return (
+                <motion.div
+                  key={`${value.title}-${index}`}
+                  className="bg-gradient-to-br from-[#1d2856] to-[#1d2856] p-8 rounded-2xl text-white hover:scale-105 transition-transform duration-300"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 * index }}
+                >
+                  <div className="w-12 h-12 bg-[#E87842] rounded-xl flex items-center justify-center mb-4">
+                    <IconComponent size={24} />
+                  </div>
+                  <h3 className="text-xl mb-2">{value.title}</h3>
+                  <p className="text-white/80 text-sm leading-relaxed">{value.description}</p>
+                </motion.div>
+              )
+            })}
           </motion.div>
         </div>
       </div>
